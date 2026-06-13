@@ -1,4 +1,4 @@
-# Meridian — Digital Marketing for Financial Advisors
+# OneStop — Digital Marketing for Financial Advisors
 
 A premium, conversion-focused marketing website for an agency that serves
 financial advisors exclusively. The site is anchored on a single, powerful
@@ -36,7 +36,7 @@ assets/js/main.js       # Nav, scroll-reveal, counters, tilt, form handling
 1. Hero — the 97% hook + dual CTA + floating stat card
 2. Trust strip — compliance / audience credibility
 3. Why Online Matters — animated stat tiles
-4. Problem vs. Meridian difference — side-by-side
+4. Problem vs. OneStop difference — side-by-side
 5. The Platform (Beacon) — interactive dashboard mockup + feature grid
 6. Services — six core offerings
 7. How It Works — 4-step process
@@ -57,14 +57,17 @@ python3 -m http.server 8000
 
 ## Customizing
 
-- **Brand name:** "Meridian" is used throughout as a placeholder agency name —
-  search/replace it (and the Beacon platform name) with the real brand.
+- **Brand:** The agency is **OneStop** and the platform is **Beacon**. Update
+  the email/phone placeholders in the footer (`hello@onestopmarketing.com`,
+  `(555) 123-4567`) with real contact details.
 - **Colors:** all defined as CSS variables at the top of `styles.css`
   (`--gold`, `--blue`, `--navy-*`, etc.).
 - **Stats:** counter values live in `data-target` attributes in `index.html`.
-- **Contact form:** currently validates and confirms on the front end only.
-  Wire the `submit` handler in `assets/js/main.js` to a real endpoint
-  (e.g. a form service, CRM webhook, or the Beacon backend) to capture leads.
+- **Contact form:** validates, then opens the visitor's email client with a
+  pre-filled message to the agency (`mailto:`). Change the destination via the
+  `CONTACT_EMAIL` constant at the top of `assets/js/main.js`. To capture leads
+  server-side instead (form service, CRM webhook, or the Beacon backend),
+  replace the `mailto:` block in the `submit` handler.
 
 ## Notes
 

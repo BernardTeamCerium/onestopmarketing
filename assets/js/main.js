@@ -4,6 +4,9 @@
 (function () {
   "use strict";
 
+  // Where contact-form submissions are emailed. Update to the real inbox.
+  var CONTACT_EMAIL = "hello@onestopmarketing.com";
+
   var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---- Sticky header condense ---- */
@@ -139,10 +142,31 @@
         return;
       }
 
-      // No backend wired yet — acknowledge and let the team connect a handler.
+      // Compose a pre-filled email to the agency from the form contents.
+      var get = function (id) {
+        var el = form.elements.namedItem(id);
+        return el && el.value ? el.value.trim() : "";
+      };
+      var firm = get("firm");
+      var subject = "Strategy call request — " + name.value.trim() + (firm ? " (" + firm + ")" : "");
+      var bodyLines = [
+        "Name: " + name.value.trim(),
+        "Firm: " + (firm || "—"),
+        "Email: " + email.value.trim(),
+        "Phone: " + (get("phone") || "—"),
+        "",
+        "What they'd like to grow:",
+        get("message") || "—"
+      ];
+      var mailto = "mailto:" + CONTACT_EMAIL +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(bodyLines.join("\n"));
+
+      window.location.href = mailto;
+
       note.classList.add("ok");
-      note.textContent = "Thank you, " + name.value.trim().split(" ")[0] + "! Your request is in — we'll reach out within one business day.";
-      form.reset();
+      note.textContent = "Thanks, " + name.value.trim().split(" ")[0] +
+        "! Your email app should open with your request ready to send. Prefer to write us directly? " + CONTACT_EMAIL;
     });
   }
 
