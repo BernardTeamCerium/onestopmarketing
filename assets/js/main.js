@@ -5,7 +5,7 @@
   "use strict";
 
   // Where contact-form submissions are emailed. Update to the real inbox.
-  var CONTACT_EMAIL = "hello@onestopmarketing.com";
+  var CONTACT_EMAIL = "info@onestopmarketing.com";
 
   var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 

@@ -58,7 +58,7 @@ python3 -m http.server 8000
 ## Customizing
 
 - **Brand:** The agency is **OneStop** and the platform is **Beacon**. Update
-  the email/phone placeholders in the footer (`hello@onestopmarketing.com`,
+  the email/phone placeholders in the footer (`info@onestopmarketing.com`,
   `(555) 123-4567`) with real contact details.
 - **Colors:** all defined as CSS variables at the top of `styles.css`
   (`--gold`, `--blue`, `--navy-*`, etc.).
