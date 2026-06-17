@@ -27,10 +27,44 @@ dashboard. This is the "can't-be-mimicked" differentiator.
 ## Structure
 
 ```
-index.html              # All page content (single page, anchored sections)
-assets/css/styles.css   # Design system + all components
+index.html              # Marketing site (single page, anchored sections)
+app.html                # Beacon Tasks — the task-management module
+assets/css/styles.css   # Marketing design system + components
+assets/css/app.css      # Beacon Tasks styles (same design language)
 assets/js/main.js       # Nav, scroll-reveal, counters, tilt, form handling
+assets/js/app.js        # Beacon Tasks app logic
 ```
+
+## Beacon Tasks (`app.html`)
+
+A self-contained, no-backend task manager built into the Beacon platform.
+Open it from the nav (**Tasks**) or the **Open Beacon Tasks** button in the
+Platform section. It works entirely in the browser — tasks persist in
+`localStorage` on the device.
+
+**What it does**
+- **One-off vs. recurring tasks** — separate single to-dos from **daily** and
+  **weekly** routines. Recurring tasks automatically reset each period (a daily
+  task re-opens the next day; a weekly task re-opens at the start of the week).
+- **Reminders** — three serverless paths, all selectable per task:
+  - *In-app + desktop notifications* — enable with the **Reminders** bell;
+    due/overdue badges update live and the browser notifies you when a task is
+    due (uses the Notifications API).
+  - *Google Calendar* — the 📅 action opens a pre-filled
+    `calendar.google.com` event (with recurrence + a built-in reminder).
+  - *Email* — the ✉ action opens a pre-filled message (to the assignee if an
+    email was entered).
+- **Stay organized** — sidebar views (Today, Upcoming, All, by type, Shared,
+  Completed) with live counts, search, and Smart/Due/Priority sorting.
+- **Share with your team** — assign a task to a teammate (name or email) and
+  use **Share tasks** to generate a link; the teammate opens it and imports the
+  selected tasks into their own Beacon Tasks (`#import=` payload). No accounts
+  or server required.
+
+**Notes / limits.** Because there's no backend, data lives per-browser and
+team sharing is link-based (a snapshot import), not live multi-user sync. To
+add real accounts and shared, synced state later, replace the `localStorage`
+layer in `assets/js/app.js` with API calls to a backend or the Beacon platform.
 
 ### Sections
 1. Hero — the 97% hook + dual CTA + floating stat card

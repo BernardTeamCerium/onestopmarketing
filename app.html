@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beacon Tasks &mdash; OneStop</title>
+  <meta name="description" content="Beacon Tasks — stay organized with reminders, separate one-off and recurring tasks, and share work with your team. Part of the OneStop / Beacon platform." />
+  <meta name="theme-color" content="#0A0F1F" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+  <!-- ============ APP BAR ============ -->
+  <header class="app-bar">
+    <a href="index.html#top" class="app-brand" aria-label="Beacon home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="24" height="24" fill="none"><path d="M16 8 L23 11.5 V20.5 L16 24 L9 20.5 V11.5 Z" fill="currentColor"/></svg>
+      </span>
+      <span>Beacon</span>
+      <span class="sub">Tasks</span>
+    </a>
+    <span class="app-bar-spacer"></span>
+    <button class="bell" id="bell" type="button" aria-pressed="false" title="Enable desktop reminders">
+      <span class="bell-dot" aria-hidden="true"></span>
+      <span class="lbl">Reminders off</span>
+    </button>
+    <a href="index.html#platform" class="app-back">&larr; Back to site</a>
+  </header>
+
+  <div class="app-shell">
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="side" aria-label="Task filters">
+      <div class="side-group">
+        <p class="side-label">Views</p>
+        <button class="side-link active" data-view="today"><span class="ico" aria-hidden="true">◷</span><span class="label">Today</span><span class="count" data-count="today">0</span></button>
+        <button class="side-link" data-view="all"><span class="ico" aria-hidden="true">▦</span><span class="label">All active</span><span class="count" data-count="all">0</span></button>
+        <button class="side-link" data-view="upcoming"><span class="ico" aria-hidden="true">↗</span><span class="label">Upcoming</span><span class="count" data-count="upcoming">0</span></button>
+      </div>
+
+      <div class="side-group">
+        <p class="side-label">By type</p>
+        <button class="side-link" data-view="oneoff"><span class="ico" aria-hidden="true">◆</span><span class="label">One-off</span><span class="count" data-count="oneoff">0</span></button>
+        <button class="side-link" data-view="daily"><span class="ico" aria-hidden="true">↻</span><span class="label">Daily</span><span class="count" data-count="daily">0</span></button>
+        <button class="side-link" data-view="weekly"><span class="ico" aria-hidden="true">⊞</span><span class="label">Weekly</span><span class="count" data-count="weekly">0</span></button>
+      </div>
+
+      <div class="side-group">
+        <p class="side-label">Team</p>
+        <button class="side-link" data-view="shared"><span class="ico" aria-hidden="true">⊕</span><span class="label">Shared with team</span><span class="count" data-count="shared">0</span></button>
+        <button class="side-link" data-view="done"><span class="ico" aria-hidden="true">✓</span><span class="label">Completed</span><span class="count" data-count="done">0</span></button>
+      </div>
+
+      <div class="side-foot">
+        <p>Share a set of tasks with your team as a link.</p>
+        <button class="btn btn-ghost btn-sm btn-block" id="openShare" type="button">⊕ Share tasks</button>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main">
+      <div class="main-head">
+        <h1 id="viewTitle">Today</h1>
+        <p id="viewSub">Everything due today, plus anything overdue.</p>
+      </div>
+
+      <!-- Composer -->
+      <form class="composer" id="composer" autocomplete="off">
+        <div class="composer-head">
+          <span class="plus" aria-hidden="true">+</span>
+          <input type="text" class="title-input" id="taskTitle" placeholder="Add a task… (e.g. Call the Henderson lead)" aria-label="Task title" />
+          <button type="button" class="btn btn-ghost btn-sm" id="composerToggle">Details</button>
+          <button type="submit" class="btn btn-primary btn-sm">Add task</button>
+        </div>
+        <div class="composer-body">
+          <div class="field">
+            <label for="taskType">Task type</label>
+            <select id="taskType">
+              <option value="oneoff">One-off</option>
+              <option value="daily">Recurring — daily</option>
+              <option value="weekly">Recurring — weekly</option>
+            </select>
+          </div>
+          <div class="field recur-row" id="weekdayField">
+            <label for="taskWeekday">Repeats on</label>
+            <select id="taskWeekday">
+              <option value="1">Monday</option>
+              <option value="2">Tuesday</option>
+              <option value="3">Wednesday</option>
+              <option value="4">Thursday</option>
+              <option value="5">Friday</option>
+              <option value="6">Saturday</option>
+              <option value="0">Sunday</option>
+            </select>
+          </div>
+          <div class="field" id="dueDateField">
+            <label for="taskDate">Due date</label>
+            <input type="date" id="taskDate" />
+          </div>
+          <div class="field">
+            <label for="taskTime">Reminder time</label>
+            <input type="time" id="taskTime" />
+          </div>
+          <div class="field">
+            <label for="taskPriority">Priority</label>
+            <select id="taskPriority">
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="taskAssignee">Assign / share with (name or email)</label>
+            <input type="text" id="taskAssignee" placeholder="e.g. Marcus or marcus@firm.com" list="teamList" />
+            <datalist id="teamList"></datalist>
+          </div>
+          <div class="field full">
+            <label for="taskNotes">Notes</label>
+            <textarea id="taskNotes" placeholder="Optional details…"></textarea>
+          </div>
+          <div class="composer-actions">
+            <button type="button" class="btn btn-ghost btn-sm" id="composerCancel">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm">Save task</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <label class="search">
+          <span class="ico" aria-hidden="true">⌕</span>
+          <input type="search" id="search" placeholder="Search tasks…" aria-label="Search tasks" />
+        </label>
+        <div class="seg" role="group" aria-label="Sort">
+          <button type="button" class="active" data-sort="smart">Smart</button>
+          <button type="button" data-sort="due">By due</button>
+          <button type="button" data-sort="priority">By priority</button>
+        </div>
+      </div>
+
+      <!-- Task list -->
+      <div id="taskList"></div>
+    </main>
+  </div>
+
+  <!-- ============ SHARE MODAL ============ -->
+  <div class="modal-backdrop" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="shareTitle">Share tasks with your team</h2>
+        <p>Pick the tasks to share. Your teammate opens the link and imports them into their own Beacon Tasks.</p>
+      </div>
+      <div class="modal-body">
+        <div class="share-link">
+          <input type="text" id="shareUrl" readonly aria-label="Shareable link" placeholder="Select tasks to generate a link…" />
+          <button class="btn btn-primary btn-sm" id="copyShare" type="button">Copy</button>
+        </div>
+        <div class="share-list" id="shareList"></div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost btn-sm" id="closeShare" type="button">Close</button>
+          <button class="btn btn-ghost btn-sm" id="emailShare" type="button">✉ Email selected</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toasts" aria-live="polite"></div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
